@@ -19,7 +19,7 @@ public class Obstaculo extends Objeto {
      try{
         BufferedImage imgoriginal = ImageIO.read(new File(this.nome));
         g.drawImage(imgoriginal,this.getX(),this.getY(),this.getLarg(),this.getAlt(),null);
-        g.dispose();
+        
         } catch (IOException e) {;
             e.printStackTrace();
         } 

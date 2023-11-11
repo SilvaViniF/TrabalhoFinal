@@ -10,20 +10,20 @@ public class Principal {
 		
         MyPanel panel = new MyPanel();		
 		janela.add(panel);	
-
+        janela.setVisible(true);
         List<Objeto> lista = panel.getLista();
         
-        janela.setVisible(true);
-		
-        lista.add(new Obstaculo(100, 150, 150, 150, "predio.png"));
-        lista.add(new Obstaculo(800,300,150,300,"casa.png"));
+        lista.add(new Obstaculo(100, 150, 180, 180, "predio.png"));
+        lista.add(new Obstaculo(300,500,120,120,"tree.png"));
+        lista.add(new Obstaculo(900,200,120,120,"casa.png"));
+        lista.add(new Obstaculo(900,600,100,100,"pedra.png"));
         
-        // while (true) {
-          
-        // // redesenhar tela
-		// 	janela.repaint();
+        while (true) {
+        // redesenhar tela
+			janela.repaint();
+            
 				
-		// 	Thread.sleep(100);		
-        // }
+			Thread.sleep(100);		
+        }
     }
 }
