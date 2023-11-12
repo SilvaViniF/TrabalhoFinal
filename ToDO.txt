@@ -1,0 +1,6 @@
+//Falta fazer:
+
+1 - Colisão com obstaculos
+2 - Energia (lógica e mostrar)
+3 - Resistencia
+4 - Projeteis
