@@ -1,6 +1,8 @@
 //Falta fazer:
 
-1 - Colisão com obstaculos
-2 - Energia (lógica e mostrar)
-3 - Resistencia
+1.1 - Melhorar colisão com guerreiros
+1.2 - Adicionar colisão com obstáculos
+2 - Energia (lógica de perder com colisões e limite da tela)
+3 - Resistencia - OK?
 4 - Projeteis
+5 - Adicionar mensagem de fim de jogo quando tiver só um guerreiro
