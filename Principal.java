@@ -43,13 +43,20 @@ public class Principal {
                             g2.mudadirecao();
                             g2.move();
                         }
-                        //checa colisoes entre guerreiros
+                        //checa colisoes
                         if(g1.Colisao(g2)){
                             g1.dimenergia(g2,lista);
                             g2.dimenergia(g1,lista);
+                            g1.mudadirecao();
+                            g2.mudadirecao();
                         }
                     }
+                    if(g1.Colisao(G2)){
+                            g1.dimenergiaobs(G2,lista);
+                            //g1.mudadirecao();
+                        }
                 }
+
             }
         }
 		janela.repaint();	

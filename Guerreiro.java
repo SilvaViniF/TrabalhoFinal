@@ -42,13 +42,14 @@ public class Guerreiro extends Objeto {
 }
     // criar um metodo de colisoes, que diminui a energia caso tenha colisao
     // e zere a energia caso a colisao seja com um projetil
-    public boolean Colisao(Guerreiro outro){
+    public boolean Colisao(Objeto outro){
         Rectangle thislimite = new Rectangle(getX(),getY(),getLarg(),getAlt());
         Rectangle outrolimite = new Rectangle(outro.getX(),outro.getY(),outro.getLarg(),outro.getAlt());
         //Rectangle intersec = thislimite.intersection(outrolimite);
         
         return thislimite.intersects(outrolimite);
-    }
+    }    
+    
     public void move() {
         parado = false;
         movecount++;
@@ -136,5 +137,15 @@ public class Guerreiro extends Objeto {
             this.energia -= dano;
             }
         }  
+    }
+
+    public void dimenergiaobs(Objeto outro,List<Objeto> lista){
+        if(lista.size()>1){
+            System.out.println("colisao com obstaculo");
+            int dano=this.resistencia+1;
+            if(dano>0){
+                this.energia -= dano;
+            }
+        }
     }
 }
