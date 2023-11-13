@@ -7,7 +7,7 @@ import java.util.List;
 public class Guerreiro extends Objeto {
     Random rand = new Random();
     private int direcao,movecount,movelim,energia,resistencia,ataque;
-    private boolean parado;
+    private boolean parado,morto;
     float r = rand.nextFloat();
     float g = rand.nextFloat();
     float b = rand.nextFloat();
@@ -23,6 +23,7 @@ public class Guerreiro extends Objeto {
         energia=100;
         resistencia=rand.nextInt(5);
         ataque=rand.nextInt(10);
+        morto=false;
 	}
     @Override
     public void desenha(Graphics g) {
@@ -38,15 +39,18 @@ public class Guerreiro extends Objeto {
         int x = getX() + (getLarg() - stringWidth) / 2;
         int y = getY() + (getAlt() + stringHeight) / 2;
         g.drawString(energiaString, x, y);
-    }
+    }else{morto=true;}
 }
     // criar um metodo de colisoes, que diminui a energia caso tenha colisao
     // e zere a energia caso a colisao seja com um projetil
     public boolean Colisao(Objeto outro){
         Rectangle thislimite = new Rectangle(getX(),getY(),getLarg(),getAlt());
         Rectangle outrolimite = new Rectangle(outro.getX(),outro.getY(),outro.getLarg(),outro.getAlt());
-        //Rectangle intersec = thislimite.intersection(outrolimite);
-        return thislimite.intersects(outrolimite);
+        Rectangle intersec = thislimite.intersection(outrolimite);
+        if(intersec.getWidth()>0 && intersec.getHeight()>0){
+            return true;
+        }
+        return false;
     }    
     
     public void move() {
@@ -55,7 +59,7 @@ public class Guerreiro extends Objeto {
         if(movecount >= movelim){
             mudadirecao();
             movecount=0;
-            movelim=rand.nextInt(100)+500;
+            movelim=rand.nextInt(100)+50;
         }
         switch (direcao) {
             case 0:
@@ -129,20 +133,21 @@ public class Guerreiro extends Objeto {
     public int getResistencia(){
         return resistencia;
     }
-    public void dimenergia(Guerreiro outro,List<Objeto> lista){
-        if(lista.size()>1){
-            int dano=outro.getAtaque() - this.resistencia;
-            if(dano>0){
-            this.energia -= dano;
-            }
-        
-        }  
-    }
 
-    public void dimenergiaobs(Objeto outro,List<Objeto> lista){
-        if(lista.size()>1){    
-            int dano=this.resistencia+1;
-            if(dano>0){
+    public boolean getMorto(){
+        return morto;
+    }
+  
+    public void dimenergiaobs(Objeto outro, List<Objeto> lista) {
+        if (outro instanceof Guerreiro) {
+            Guerreiro g = (Guerreiro) outro;
+            int dano = g.getAtaque() - this.resistencia;
+            if (dano > 0) {
+                this.energia -= dano;
+            }
+        } else {
+            int dano = this.resistencia + 1;
+            if (dano > 0) {
                 this.energia -= dano;
             }
         }

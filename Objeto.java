@@ -17,6 +17,8 @@ public abstract class Objeto {
 
 	public abstract void desenha(Graphics g);
 	
+	
+
 	public int getX() {
 		return x;
 	}
@@ -48,5 +50,7 @@ public abstract class Objeto {
 	public void setAlt(int alt) {
 		this.alt = alt;
 	}
+
+	
 	
 }
