@@ -13,6 +13,7 @@ public class MyPanel extends JPanel {
 		//desenhando objetos
         for (Objeto f: lista) {
 			f.desenha(g);
+			
 		}	
 	}
      

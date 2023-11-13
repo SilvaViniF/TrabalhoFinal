@@ -1,6 +1,7 @@
 import javax.swing.JFrame;
 import java.util.Random;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Principal {
@@ -27,7 +28,6 @@ public class Principal {
         }
 
         while (true) {
-            
             attGuerreiros(lista);
             janela.repaint();
             Thread.sleep(100);
@@ -36,23 +36,28 @@ public class Principal {
     }
     
 private static void attGuerreiros(List<Objeto> lista) {
+    List<Guerreiro> guerreirosMortos = new ArrayList<>();
+
     for (Objeto obj : lista) {
         if (obj instanceof Guerreiro) {
             Guerreiro guerreiro = (Guerreiro) obj;
-            if(guerreiro.getMorto()){lista.remove(guerreiro);}
-            guerreiro.move();
-            for (Objeto outro : lista) {
+                guerreiro.move();
+                for (Objeto outro : lista) {
                 if (outro != guerreiro) {
                     if (guerreiro.Colisao(outro)) {
                         guerreiro.mudadirecao();
                         guerreiro.dimenergiaobs(outro, lista);
-                    
+                        if (guerreiro.getEnergia() <= 0) {
+                            guerreirosMortos.add(guerreiro);
+                            }
+                        }
                     }
-            
-                }
             }
+            
         }
     }
+    
+    lista.removeAll(guerreirosMortos);
 }
         
 
