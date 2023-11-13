@@ -19,7 +19,7 @@ public class Guerreiro extends Objeto {
         direcao=rand.nextInt(4);
         parado=false;
         movecount=0;
-        movelim=rand.nextInt(100)+50;
+        movelim=rand.nextInt(100)+500;
         energia=100;
         resistencia=rand.nextInt(5);
         ataque=rand.nextInt(10);
@@ -46,7 +46,6 @@ public class Guerreiro extends Objeto {
         Rectangle thislimite = new Rectangle(getX(),getY(),getLarg(),getAlt());
         Rectangle outrolimite = new Rectangle(outro.getX(),outro.getY(),outro.getLarg(),outro.getAlt());
         //Rectangle intersec = thislimite.intersection(outrolimite);
-        
         return thislimite.intersects(outrolimite);
     }    
     
@@ -56,7 +55,7 @@ public class Guerreiro extends Objeto {
         if(movecount >= movelim){
             mudadirecao();
             movecount=0;
-            movelim=rand.nextInt(100)+50;
+            movelim=rand.nextInt(100)+500;
         }
         switch (direcao) {
             case 0:
@@ -136,12 +135,12 @@ public class Guerreiro extends Objeto {
             if(dano>0){
             this.energia -= dano;
             }
+        
         }  
     }
 
     public void dimenergiaobs(Objeto outro,List<Objeto> lista){
-        if(lista.size()>1){
-            System.out.println("colisao com obstaculo");
+        if(lista.size()>1){    
             int dano=this.resistencia+1;
             if(dano>0){
                 this.energia -= dano;

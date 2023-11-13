@@ -1,6 +1,8 @@
 //Falta fazer:
 
 melhorar movimento
+Os guerreiros nao estao sendo excluidos da lista do Principal.java
+só n estao sendo desenhados quando energia<=0 -Mudar
 1.1 - Melhorar colisão com guerreiros
 1.2 - Adicionar colisão com obstáculos
 2 - Energia (lógica de perder com colisões) - OK
