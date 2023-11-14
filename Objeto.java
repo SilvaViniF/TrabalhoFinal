@@ -2,10 +2,10 @@ import java.awt.Graphics;
 
 public abstract class Objeto {
 	private int x, y, larg, alt;
-	
-	
-	public Objeto() {}
-	
+
+	public Objeto() {
+	}
+
 	public Objeto(int x, int y, int larg, int alt) {
 		super();
 		this.x = x;
@@ -16,7 +16,7 @@ public abstract class Objeto {
 	}
 
 	public abstract void desenha(Graphics g);
-	
+
 	public int getX() {
 		return x;
 	}
@@ -48,5 +48,5 @@ public abstract class Objeto {
 	public void setAlt(int alt) {
 		this.alt = alt;
 	}
-	
+
 }
