@@ -1,12 +1,9 @@
 //Falta fazer:
 
-melhorar movimento - OK
-agora estao morrendo
-
-1.1 - Melhorar colisão com guerreiros
-1.2 - Adicionar colisão com obstáculos
-
+melhorar movimento
+1.1 - Melhorar colisão com guerreiros OK
+1.2 - Adicionar colisão com obstáculos OK
+2 - Energia (lógica de perder com colisões) - OK
+3 - Resistencia - OK
 4 - Projeteis
-5 - Adicionar mensagem de fim de jogo quando tiver só um guerreiro
-
-parametros de resistencia/energia/ataque - estao ok?
+5 - Adicionar mensagem de fim de jogo quando tiver só um guerreiro OK
