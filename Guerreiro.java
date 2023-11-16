@@ -3,8 +3,10 @@ import java.awt.Graphics;
 import java.util.Random;
 import java.awt.Rectangle;
 import java.util.List;
+import java.util.ArrayList;
 
 public class Guerreiro extends Objeto {
+    private List<Objeto> projs = new ArrayList<Objeto>();
     Random rand = new Random();
     private int direcao;
     private float energia, resistencia, ataque;
@@ -27,6 +29,7 @@ public class Guerreiro extends Objeto {
     @Override
     public void desenha(Graphics g) {
         if (energia > 0) {
+        
             // desenha guerreiro
             g.setColor(randomColor);
             g.drawRect(getX(), getY(), getLarg(), getAlt());
@@ -58,6 +61,7 @@ public class Guerreiro extends Objeto {
     }
 
     public void move() {
+        this.atira();
         switch (direcao) {
             case 0:
                 moveCima();
@@ -155,5 +159,22 @@ public class Guerreiro extends Objeto {
                 this.energia -= dano;
             }
         }
+    }
+
+    public void atira() {
+        Projetil projetil = new Projetil(this.getX()+15,this.getY()+15,this.direcao);
+        projetil.move();
+        projs.add(projetil);
+
+        for(Objeto p:projs){
+            Projetil pr=(Projetil)p;
+            if(pr.vida>10){
+                projs.remove(p);
+            }
+        }
+    }
+
+    public List<Objeto> getProjs(){
+        return this.projs;
     }
 }

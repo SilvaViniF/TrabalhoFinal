@@ -1,9 +1,9 @@
-import javax.swing.JFrame;
 import java.util.Random;
 import java.awt.Color;
 import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
+
 import javax.swing.*;
 
 public class Principal {
@@ -12,24 +12,24 @@ public class Principal {
         JFrame janela = new JFrame();
         janela.setSize(1200, 768);
         janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         MyPanel panel = new MyPanel();
         panel.setBackground(Color.LIGHT_GRAY);
         janela.add(panel);
         janela.setVisible(true);
         List<Objeto> lista = panel.getLista();
-
+        List<Objeto> projs = new ArrayList<Objeto>();
         while(true){
             // adicionando os obstaculos
             lista.add(new Obstaculo(100, 150, 180, 180, "predio.png"));
             lista.add(new Obstaculo(300, 500, 120, 120, "tree.png"));
             lista.add(new Obstaculo(900, 200, 120, 120, "casa.png"));
             lista.add(new Obstaculo(900, 600, 100, 100, "pedra.png"));
-
+            
             Random rand = new Random();
             // adicionando guerreiros:
-            for (int i = 0; i < 10; i++) {
-                lista.add(new Guerreiro(rand.nextInt(1000), rand.nextInt(500), 30, 30, String.valueOf(i)));
+            for (int i = 0; i < 2; i++) {
+                Guerreiro a=new Guerreiro(rand.nextInt(1000), rand.nextInt(500), 30, 30, String.valueOf(i));
+                lista.add(a);
             }
 
             Objeto remove = null; 
@@ -43,12 +43,12 @@ public class Principal {
                             if (g1.getEnergia() <= 0) {
                                 remove = G1;
                             } else {
+                                projs.addAll(g1.getProjs());
                                 g1.move();
                                 for (Objeto G2 : lista) {
                                     if (G2 instanceof Guerreiro && G2 != G1) {
                                         Guerreiro g2 = (Guerreiro) G2;
                                         g2.move();
-
                                         // checa colisoes
                                         if (g1.Colisao(g2)) {
                                             g1.dimEnergia(g2, lista);
@@ -64,8 +64,9 @@ public class Principal {
                             }
                         }
                     }
+                    lista.addAll(projs);
                     janela.repaint();
-                    Thread.sleep(10);
+                    Thread.sleep(100);
                 } else {
                     Guerreiro vencedor = (Guerreiro) lista.get(lista.size()-1);
                     JOptionPane.showMessageDialog(janela, "O guerreiro n° " + vencedor.getId() + " venceu o jogo!",
@@ -76,6 +77,7 @@ public class Principal {
                     lista.remove(remove);
                 }
                 remove = null;
+                
             }
 
             lista.clear();
