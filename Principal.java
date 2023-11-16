@@ -43,8 +43,8 @@ public class Principal {
                             if (g1.getEnergia() <= 0) {
                                 remove = G1;
                             } else {
-                                projs.addAll(g1.getProjs());
                                 g1.move();
+                                projs.addAll(g1.getProjs());
                                 for (Objeto G2 : lista) {
                                     if (G2 instanceof Guerreiro && G2 != G1) {
                                         Guerreiro g2 = (Guerreiro) G2;
@@ -64,9 +64,9 @@ public class Principal {
                             }
                         }
                     }
-                    lista.addAll(projs);
+                    
                     janela.repaint();
-                    Thread.sleep(100);
+                    Thread.sleep(50);
                 } else {
                     Guerreiro vencedor = (Guerreiro) lista.get(lista.size()-1);
                     JOptionPane.showMessageDialog(janela, "O guerreiro n° " + vencedor.getId() + " venceu o jogo!",
@@ -77,9 +77,9 @@ public class Principal {
                     lista.remove(remove);
                 }
                 remove = null;
-                
+                lista.addAll(projs);
             }
-
+            
             lista.clear();
         }
     }

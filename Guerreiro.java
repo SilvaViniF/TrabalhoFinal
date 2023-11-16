@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class Guerreiro extends Objeto {
     private List<Objeto> projs = new ArrayList<Objeto>();
+    private List<Objeto> projsremove = new ArrayList<>();
     Random rand = new Random();
     private int direcao;
     private float energia, resistencia, ataque;
@@ -61,6 +62,7 @@ public class Guerreiro extends Objeto {
     }
 
     public void move() {
+        
         this.atira();
         switch (direcao) {
             case 0:
@@ -76,6 +78,7 @@ public class Guerreiro extends Objeto {
                 moveDir();
                 break;
         }
+        
     }
 
     public void moveCima() {
@@ -162,16 +165,17 @@ public class Guerreiro extends Objeto {
     }
 
     public void atira() {
+        
         Projetil projetil = new Projetil(this.getX()+15,this.getY()+15,this.direcao);
-        projetil.move();
         projs.add(projetil);
-
         for(Objeto p:projs){
             Projetil pr=(Projetil)p;
-            if(pr.vida>10){
-                projs.remove(p);
+            pr.move();
+            if(pr.getX() < 0 || pr.getX() > 1200 || pr.getY() < 0 || pr.getY() > 768){
+                projsremove.add(pr);
             }
-        }
+         }
+       projs.removeAll(projsremove); 
     }
 
     public List<Objeto> getProjs(){

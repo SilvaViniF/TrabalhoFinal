@@ -3,8 +3,7 @@ import java.awt.Graphics;
 
 public class Projetil extends Objeto {
     private int direcao;
-    public int vida;
-    private int passo=5;
+    private int passo=10;
 
     @Override
     public void desenha(Graphics g) {
@@ -20,7 +19,7 @@ public class Projetil extends Objeto {
     }
 
     public void move() {
-        this.vida++;
+        
         switch (direcao) {
             case 0:
                 moveCima();
@@ -74,7 +73,7 @@ public class Projetil extends Objeto {
             this.setX(x);
             
         } else {
-    
+
         }
     }
 }
