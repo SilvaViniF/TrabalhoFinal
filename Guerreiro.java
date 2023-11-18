@@ -3,7 +3,7 @@ import java.awt.Graphics;
 import java.util.Random;
 import java.util.List;
 
-public class Guerreiro extends ElementoLivre {
+public class Guerreiro extends ElementoLivre{
     private String id;
     private float energia, resistencia;
     private int tempoDeDisparo;

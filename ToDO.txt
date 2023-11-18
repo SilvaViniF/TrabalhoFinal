@@ -10,4 +10,4 @@ melhorar movimento
 6 - Arrumar o erro "Exception in thread "AWT-EventQueue-0" java.util.ConcurrentModificationException"
 7 - Pintar de vermelho os guerreiros quando sofrem dano - OK
 8 - Lista lateral dos vivos e seus dados - OK
-9 - Implementar Interface em algum lugar
+9 - Implementar Interface em algum lugar - OK

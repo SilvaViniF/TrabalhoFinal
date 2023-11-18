@@ -1,7 +1,7 @@
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-abstract public class ElementoLivre extends Objeto {
+abstract public class ElementoLivre extends Objeto implements Movel {
     private int direcao;
     private int passo;
     private float ataque;
@@ -39,14 +39,6 @@ abstract public class ElementoLivre extends Objeto {
 
         return thislimite.intersects(outrolimite);
     }
-
-    abstract public void moveCima();
-
-    abstract public void moveBaixo();
-
-    abstract public void moveEsq();
-
-    abstract public void moveDir();
 
     public float getAtaque() {
         return this.ataque;

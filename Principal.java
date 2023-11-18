@@ -1,14 +1,8 @@
 import java.util.Random;
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.util.ArrayList;
-//import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.*;
-
 public class Principal {
 
     public static void main(String args[]) throws InterruptedException {
@@ -64,7 +58,6 @@ public class Principal {
             painelLateral.setLista(listaGuerreiros);
 
             Objeto remove = null;
-
             while (true) {
                 // redesenhar tela
                 if (listaGuerreiros.size() > 1) {
