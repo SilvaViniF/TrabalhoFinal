@@ -12,12 +12,9 @@ public abstract class Objeto {
 		this.y = y;
 		this.larg = larg;
 		this.alt = alt;
-
 	}
 
 	public abstract void desenha(Graphics g);
-
-	
 
 	public int getX() {
 		return x;
