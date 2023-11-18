@@ -1,9 +1,13 @@
 //Falta fazer:
 
 melhorar movimento
-1.1 - Melhorar colisão com guerreiros OK
-1.2 - Adicionar colisão com obstáculos OK
+1.1 - Melhorar colisão com guerreiros - OK
+1.2 - Adicionar colisão com obstáculos - OK
 2 - Energia (lógica de perder com colisões) - OK
 3 - Resistencia - OK
-4 - Projeteis
-5 - Adicionar mensagem de fim de jogo quando tiver só um guerreiro OK
+4 - Projeteis - OK
+5 - Adicionar mensagem de fim de jogo quando tiver só um guerreiro - OK
+6 - Arrumar o erro "Exception in thread "AWT-EventQueue-0" java.util.ConcurrentModificationException"
+7 - Pintar de vermelho os guerreiros quando sofrem dano - OK
+8 - Lista lateral dos vivos e seus dados - OK
+9 - Implementar Interface em algum lugar

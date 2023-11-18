@@ -1,4 +1,5 @@
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 abstract public class ElementoLivre extends Objeto {
     private int direcao;
@@ -30,6 +31,13 @@ abstract public class ElementoLivre extends Objeto {
                 moveDir();
                 break;
         }
+    }
+
+    public boolean Colisao(Objeto outro) {
+        Rectangle thislimite = new Rectangle(getX(), getY(), getLarg(), getAlt());
+        Rectangle outrolimite = new Rectangle(outro.getX(), outro.getY(), outro.getLarg(), outro.getAlt());
+
+        return thislimite.intersects(outrolimite);
     }
 
     abstract public void moveCima();

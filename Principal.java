@@ -1,5 +1,8 @@
 import java.util.Random;
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.util.ArrayList;
 //import java.util.ArrayList;
 import java.util.List;
@@ -9,16 +12,30 @@ import javax.swing.*;
 public class Principal {
 
     public static void main(String args[]) throws InterruptedException {
-        JFrame janela = new JFrame();
-        janela.setSize(1200, 768);
+        JFrame janela = new JFrame("Trabalho Final");
+        janela.setSize(1500, 768);
         janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        janela.setLayout(null);
+
         MyPanel panel = new MyPanel();
         panel.setBackground(Color.LIGHT_GRAY);
+        panel.setBounds(0, 0, 1200, 768);
         janela.add(panel);
+        
+        PainelLateral1 painelLateral = new PainelLateral1();
+        painelLateral.setBackground(Color.LIGHT_GRAY);
+        painelLateral.setBounds(1225, 0, 300, 768);
+        janela.add(painelLateral);
+        
         janela.setVisible(true);
+        
         List<Objeto> lista = panel.getLista();
+        List<Guerreiro> listaGuerreiros = new ArrayList<Guerreiro>();
         List<Projetil> projs = new ArrayList<Projetil>();
         List<Projetil> projsRemove = new ArrayList<Projetil>();
+        int numGuerreiros = 30;
+
         while (true) {
             // lista.addAll(projs);
 
@@ -31,59 +48,83 @@ public class Principal {
             Random rand = new Random();
             float ataque;
             int direcao;
-            Guerreiro a;
+            Guerreiro g;
+            float resistencia;
+            int tempoDeDisparo;
             // adicionando guerreiros:
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < numGuerreiros; i++) {
                 ataque = rand.nextInt(20) * rand.nextFloat();
                 direcao = rand.nextInt(4);
-                a = new Guerreiro(rand.nextInt(1000), rand.nextInt(500), 30, 30, String.valueOf(i), ataque, direcao);
-                lista.add(a);
+                resistencia = rand.nextInt(5) * rand.nextFloat();
+                tempoDeDisparo = rand.nextInt(5) * 10 + 10;
+                g = new Guerreiro(rand.nextInt(1000), rand.nextInt(500), 30, 30, String.valueOf(i), ataque, direcao, resistencia, tempoDeDisparo);
+                lista.add(g);
+                listaGuerreiros.add(g);
             }
+            painelLateral.setLista(listaGuerreiros);
 
             Objeto remove = null;
 
             while (true) {
                 // redesenhar tela
-                if (lista.size() > 5) {
-                    for (Objeto G1 : lista) {
-                        if (G1 instanceof Guerreiro) {
-                            Guerreiro g1 = (Guerreiro) G1;
-                            if (g1.getEnergia() <= 0) {
-                                remove = G1;
+                if (listaGuerreiros.size() > 1) {
+                    for (Objeto obj : lista) {
+                        if (obj instanceof Guerreiro) {
+                            Guerreiro guerreiro = (Guerreiro) obj;
+                            if (guerreiro.getEnergia() <= 0) {
+                                remove = obj;
+                                listaGuerreiros.remove(obj);
+                                painelLateral.setLista(listaGuerreiros);
                             } else {
-                                g1.setTimerDisparo(g1.getTimerDisparo() + 1);
+                                guerreiro.setTimerDisparo(guerreiro.getTimerDisparo() + 1);
 
-                                if (g1.getTimerDisparo() == g1.getTempoDeDisparo()) {
-                                    projs.add(g1.atira());
-                                    g1.setTimerDisparo(0);
+                                if (guerreiro.getTimerDisparo() == guerreiro.getTempoDeDisparo()) {
+                                    projs.add(guerreiro.atira());
+                                    guerreiro.setTimerDisparo(0);
                                 }
 
-                                g1.move();
-                                // projs.addAll(g1.getProjs());
+                                guerreiro.move();
 
-                                for (Objeto G2 : lista) {
-                                    if (G2 instanceof Guerreiro && G2 != G1) {
-                                        Guerreiro g2 = (Guerreiro) G2;
-                                        g2.move();
-                                        // checa colisoes
-                                        if (g1.Colisao(g2)) {
-                                            g1.dimEnergia(g2, lista);
-                                            g2.dimEnergia(g1, lista);
-                                            g1.mudaDirecao();
-                                            g2.mudaDirecao();
+                                boolean colidiu = false;
+                                for (Objeto obj2 : lista) {
+                                    if (obj2 instanceof Guerreiro && obj2 != obj) {
+                                        Guerreiro guerreiro2 = (Guerreiro) obj2;
+                                        if (guerreiro.Colisao(guerreiro2)) {
+                                            guerreiro.dimEnergia(guerreiro2.getAtaque(), lista);
+                                            guerreiro2.dimEnergia(guerreiro.getAtaque(), lista);
+                                            guerreiro.mudaDirecao();
+                                            guerreiro2.mudaDirecao();
+                                            colidiu = true;
                                         }
-                                    } else if (G2 instanceof Obstaculo && g1.Colisao(G2)) {
-                                        g1.dimEnergiaObs(G2, lista);
-                                        g1.mudaDirecao();
+                                    } else if (obj2 instanceof Obstaculo && guerreiro.Colisao(obj2)) {
+                                        guerreiro.dimEnergiaObs(obj2, lista);
+                                        guerreiro.mudaDirecao();
+                                        colidiu = true;
                                     }
                                 }
+                                guerreiro.setEmColisao(colidiu);
                             }
-                        } else if (G1 instanceof Projetil) {
-                            Projetil g1 = (Projetil) G1;
-                            g1.move();
-                            if (g1.getX() <= 0 || g1.getX() >= 1200 || g1.getY() <= 0 || g1.getY() >= 768) {
-                                projs.remove(g1);
-                                projsRemove.add(g1);
+                        } else if (obj instanceof Projetil) {
+                            Projetil proj = (Projetil) obj;
+                            proj.move();
+                            if (proj.getX() <= 0 || proj.getX() >= 1200 || proj.getY() <= 0 || proj.getY() >= 768) {
+                                projs.remove(proj);
+                                projsRemove.add(proj);
+                            }
+
+                            for (Objeto obj2 : lista) {
+                                if (obj2 instanceof Guerreiro) {
+                                    Guerreiro guerreiro2 = (Guerreiro) obj2;
+                                    if (proj.Colisao(guerreiro2)) {
+                                        guerreiro2.dimEnergia(proj.getAtaque(), lista);
+                                        guerreiro2.setEmColisao(true);
+                                        projs.remove(proj);
+                                        projsRemove.add(proj);
+                                    }
+                                } else if (obj2 instanceof Obstaculo && proj.Colisao(obj2)) {
+                                    projs.remove(proj);
+                                    projsRemove.add(proj);
+                                }
                             }
                         }
                     }
@@ -91,8 +132,7 @@ public class Principal {
                     janela.repaint();
                     Thread.sleep(50);
                 } else {
-                    Guerreiro vencedor = (Guerreiro) lista.get(lista.size() - 1);
-                    JOptionPane.showMessageDialog(janela, "O guerreiro n° " + vencedor.getId() + " venceu o jogo!",
+                    JOptionPane.showMessageDialog(janela, "O guerreiro n° " + listaGuerreiros.get(0).getId() + " venceu o jogo!",
                             "FIM DE JOGO", JOptionPane.OK_OPTION, UIManager.getIcon("OptionPane.informationIcon"));
                     break;
                 }

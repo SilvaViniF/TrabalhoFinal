@@ -4,7 +4,7 @@ import java.awt.Graphics;
 public class Projetil extends ElementoLivre {
 
     public Projetil(int x, int y, int larg, int alt, int direcao, float ataque) {
-        super(x, y, larg, alt, 2, ataque, direcao);
+        super(x, y, larg, alt, 4, ataque, direcao);
         this.setX(x);
         this.setY(y);
         this.setDirecao(direcao);
