@@ -1,7 +1,9 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.*;
 public class Principal {
 
@@ -23,11 +25,10 @@ public class Principal {
         janela.add(painelLateral);
         
         janela.setVisible(true);
-        
-        List<Objeto> lista = panel.getLista();
-        List<Guerreiro> listaGuerreiros = new ArrayList<Guerreiro>();
-        List<Projetil> projs = new ArrayList<Projetil>();
-        List<Projetil> projsRemove = new ArrayList<Projetil>();
+        List<Objeto> lista = Collections.synchronizedList(panel.getLista());
+        List<Guerreiro> listaGuerreiros = Collections.synchronizedList(new ArrayList<Guerreiro>())  ;
+        List<Projetil> projs = Collections.synchronizedList(new ArrayList<Projetil>());
+        List<Projetil> projsRemove = Collections.synchronizedList(new ArrayList<Projetil>());
         int numGuerreiros = 30;
 
         while (true) {
@@ -66,13 +67,23 @@ public class Principal {
                             Guerreiro guerreiro = (Guerreiro) obj;
                             if (guerreiro.getEnergia() <= 0) {
                                 remove = obj;
-                                listaGuerreiros.remove(obj);
+                                    Iterator<Guerreiro> iterator4 = listaGuerreiros.iterator();
+                                    while(iterator4.hasNext()){
+                                        Guerreiro obj1 = iterator4.next();
+                                        listaGuerreiros.remove(obj1);
+                                    }
+
                                 painelLateral.setLista(listaGuerreiros);
                             } else {
                                 guerreiro.setTimerDisparo(guerreiro.getTimerDisparo() + 1);
 
                                 if (guerreiro.getTimerDisparo() == guerreiro.getTempoDeDisparo()) {
-                                    projs.add(guerreiro.atira());
+                                    Iterator<Projetil> iterator = projs.iterator();
+                                    while(iterator.hasNext()){
+                                        
+                                        projs.add(guerreiro.atira());
+                                        }
+                                    
                                     guerreiro.setTimerDisparo(0);
                                 }
 
@@ -101,8 +112,13 @@ public class Principal {
                             Projetil proj = (Projetil) obj;
                             proj.move();
                             if (proj.getX() <= 0 || proj.getX() >= 1200 || proj.getY() <= 0 || proj.getY() >= 768) {
-                                projs.remove(proj);
-                                projsRemove.add(proj);
+                                Iterator<Projetil> iterator = projs.iterator();
+                                while(iterator.hasNext()){
+                                    Projetil proj2 = iterator.next();
+                                    projs.remove(proj2);
+                                    projsRemove.add(proj2);
+                                    }
+                                
                             }
 
                             for (Objeto obj2 : lista) {
@@ -115,29 +131,50 @@ public class Principal {
                                         projsRemove.add(proj);
                                     }
                                 } else if (obj2 instanceof Obstaculo && proj.Colisao(obj2)) {
-                                    projs.remove(proj);
-                                    projsRemove.add(proj);
+                                    Iterator<Projetil> iterator = projs.iterator();
+                                    while(iterator.hasNext()){
+                                        Projetil obj3 = iterator.next();
+                                        projs.remove(obj3);
+                                        projsRemove.add(obj3);
+                                        }
+                                    
                                 }
                             }
                         }
+                    
                     }
 
                     janela.repaint();
-                    Thread.sleep(50);
+                    Thread.sleep(30);
                 } else {
                     JOptionPane.showMessageDialog(janela, "O guerreiro n° " + listaGuerreiros.get(0).getId() + " venceu o jogo!",
                             "FIM DE JOGO", JOptionPane.OK_OPTION, UIManager.getIcon("OptionPane.informationIcon"));
                     break;
                 }
                 if (remove != null) {
+                    Iterator<Objeto> iterator1 = lista.iterator();
+                while(iterator1.hasNext()){
                     lista.remove(remove);
+                    }   
                 }
                 remove = null;
-                lista.addAll(projs);
-                lista.removeAll(projsRemove);
+                Iterator<Projetil> iterator = projs.iterator();
+                while(iterator.hasNext()){
+                    Objeto obj = iterator.next();
+                    lista.add(obj);
+                    
+                }
+                Iterator<Projetil> iterator1 = projsRemove.iterator();
+                while(iterator1.hasNext()){
+                    Objeto obj = iterator1.next();
+                    lista.remove(obj);
+                    
+                }
+                //lista.addAll(projs);
+                //lista.removeAll(projsRemove);
                 projsRemove.clear();
             }
-
+            
             lista.clear();
         }
     }
