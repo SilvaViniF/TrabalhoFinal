@@ -1,11 +1,12 @@
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
 
 import javax.swing.JPanel;
 
 public class MyPanel extends JPanel {
-	private List<Objeto> lista = new ArrayList<>();
+	private List<Objeto> lista = Collections.synchronizedList(new ArrayList<>());
 
 	@Override
 	protected void paintComponent(Graphics g) {
